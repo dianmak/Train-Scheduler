@@ -17,6 +17,8 @@ var destination;
 var frequency;
 var firstTrainTime;
 
+console.log(moment().format("HH:mm"));
+
 $("#submit").on("click", function (e) {
 
     e.preventDefault();
@@ -24,7 +26,9 @@ $("#submit").on("click", function (e) {
     trainName = $("#trainName").val();
     destination = $("#destination").val();
     frequency = $("#frequency").val();
-    firstTrainTime = $("firstTrainTime").val();
+    firstTrainTime = $("#firstTrainTime").val();
+
+    console.log("first train time " + $("#firstTrainTime").val());
 
     database.ref().push({
         name: trainName,
@@ -35,28 +39,64 @@ $("#submit").on("click", function (e) {
     });
 });
 
-// Firebase watcher .on("child_added"
+var puns = ["Did you hear about the boy who had to do a project on trains? He had to keep track of everything!",
+    "Why should you never trust a train? They have loco motives.",
+    "Went to a railway fancy dress party. Everyone was wearing platforms.",
+    "A railroad engineer must be sure not to lose his train of thought or he might go down the wrong track.",
+    "Ticket inspectors. You’ve got to hand it to them…",
+    "Why don’t elephants like to ride on trains? Because they hate leaving their trunks in the baggage car.",
+    "I’ve been meaning to make a list of bad railroad puns…but I keep getting side tracked.",
+    "Why can’t the engineer be electrocuted? Because he’s not a conductor!",
+    "Trains are a broad topic so I hope no-one gets tunnel vision when expressing their feelings.",
+    "Don't get your signals crossed and no one will get steamed."]
+
+$("#newPun").on("click", function () {
+    var index = Math.floor((Math.random() * 10) + 1);
+    var pun = puns[index];
+    $("#pun").text(pun);
+});
+
 database.ref().on("child_added", function (snapshot) {
-    // storing the snapshot.val() in a variable for convenience
+
     var sv = snapshot.val();
 
-    // Console.loging the last user's data
-    console.log(sv);
+    console.log("first train time " + sv.firstTrainTime);
 
-    // Change the HTML to reflect
-    $("#name-display").text(sv.name);
-    $("#email-display").text(sv.email);
-    $("#age-display").text(sv.age);
-    $("#comment-display").text(sv.comment);
+    // First Time 
+    var firstTimeConverted = moment(sv.firstTrainTime, "hh:mm").subtract(1, "days");
+    console.log(firstTimeConverted);
 
+    // Current Time
+    var currentTime = moment();
+    console.log("CURRENT TIME: " + moment(currentTime).format("hh:mm"));
 
+    // Difference between the times
+    var diffTime = moment().diff(moment(firstTimeConverted), "minutes");
+    console.log("DIFFERENCE IN TIME: " + diffTime);
+
+    // Time apart (remainder)
+    var tRemainder = diffTime % sv.frequency;
+    console.log(tRemainder);
+
+    // Minute Until Train
+    var tMinutesTillTrain = sv.frequency - tRemainder;
+    console.log("MINUTES TILL TRAIN: " + tMinutesTillTrain);
+
+    // Next Train
+    var nextTrain = moment().add(tMinutesTillTrain, "minutes");
+    var arrivalTime = moment(nextTrain).format("hh:mm");
+    console.log("ARRIVAL TIME: " + moment(nextTrain).format("hh:mm"));
+
+    $("#scheduleBody").append(`
     <tr>
-        <td>Mark</td>
-        <td>Mark</td>
-        <td>Otto</td>
-        <td>@mdo</td>
-        <td>Mark</td>
+        <td>${sv.name}</td>
+        <td>${sv.destination}</td>
+        <td>${sv.frequency}</td>
+        <td>${arrivalTime}</td>
+        <td>${tMinutesTillTrain}</td>
     </tr>
+    `)
+
 
     // Handle the errors
 }, function (errorObject) {

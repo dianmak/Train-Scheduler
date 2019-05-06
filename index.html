@@ -16,14 +16,14 @@
 
 <body>
     <!-- MAIN HEADING -->
-    <div class="jumbotron text-center">
-        <h1 class="display-4">Hogwarts Express</h1>
-        <p class="lead">This is a simple hero unit, a simple jumbotron-style component for calling extra attention to
-            featured content or information.</p>
+    <div class="jumbotron text-center" id="pageHeader">
+        <h1 class="display-4">Platform 9¾</h1>
+        <p class="lead" id="pun">I’ve always liked one-liners. That’s why I’m a fan of monorails.</p>
+        <button type="button" class="btn btn-primary" id="newPun">Click for a new bad joke about trains!</button>
     </div>
 
 
-    <div class="container-fluid">
+    <div class="container-fluid" id="mainBody">
 
         <!-- TRAIN SCHEDULE -->
         <div class="row">
@@ -39,13 +39,7 @@
                         </tr>
                     </thead>
                     <tbody id="scheduleBody">
-                        <tr>
-                            <td>Mark</td>
-                            <td>Mark</td>
-                            <td>Otto</td>
-                            <td>@mdo</td>
-                            <td>Mark</td>
-                        </tr>
+
                     </tbody>
                 </table>
             </div>
@@ -53,7 +47,7 @@
 
         <!-- USER INPUT -->
         <div class="row">
-            <div class="col-md-10" id=input>
+            <div class="col-md-10" id="input">
                 <form>
                     <div class="form-group">
                         <label for="trainName">Train Name</label>

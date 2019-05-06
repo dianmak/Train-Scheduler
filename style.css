@@ -4,4 +4,17 @@
 
 #input{
     margin: auto;
+    margin-bottom: 20px;
+    background:white;
+}
+
+#pageHeader{
+    background-image: url("./images/Hogwarts-Express-Harry-Potter-and-the-Deathly-Hallows-Wallpaper.jpg");
+    background-size: 100%;
+    color: white;
+}
+
+#mainBody{
+    background-image: url("./images/storyblocks-train-pattern-seamless-background-in-flat-style-repeat-vector-illustration_S-loiLB0em_SB_PM.jpg");
+    background-size: 25%;
 }
